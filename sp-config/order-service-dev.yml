@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: order-service
+    
+#server:
+#  port: 8201
+
+eureka:
+  client:
+    service-url:
+       defaultZone: http://eureka1:2001/eureka,http://eureka2:2002/eureka #因为不是云分布式服务所以用这个
+
+#开启hystrix的降级和熔断. feign默认是没有开启的,feign默认只开启了ribbon
+feign:
+  hystrix:
+    enabled: true
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+        
+        
+---
+spring:
+  profiles: order1
+  
+server:
+  port: 8201
+  
+---
+spring:
+  profiles: order2
+  
+server:
+  port: 8202
+  
+  
+  
